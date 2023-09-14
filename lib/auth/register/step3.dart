@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:resq/provider_code.dart';
 import '../../comman_design_code.dart';
 
 class Step3Page extends StatefulWidget {
@@ -30,6 +32,7 @@ class _Step3PageState extends State<Step3Page> {
   ];
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<MyProviderData>(context, listen: false);
     return Form(
       key: widget.formKey,
       child: Column(
@@ -37,7 +40,7 @@ class _Step3PageState extends State<Step3Page> {
           SizedBox(height: 30,),
           InputBoxes(boxNameText: "Area of expertise", boxHintText: "Enter Area of Expertise",
             boxPrefixIcon: Icon(Icons.account_circle_outlined, color: Colors.grey,),
-            controller: AreaCont,
+            controller: provider.AreaCont,
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Username is required';
@@ -73,7 +76,7 @@ class _Step3PageState extends State<Step3Page> {
 
           InputBoxes(boxNameText: "Resources", boxHintText: "Enter Resources",
             boxPrefixIcon: Icon(Icons.account_circle_outlined, color: Colors.grey,),
-            controller: ResourcesCont,
+            controller: provider.ResourcesCont,
             validator: (value) {
               if (value == null || value.length<=2) {
                 return 'Enter correct resources';
@@ -83,7 +86,7 @@ class _Step3PageState extends State<Step3Page> {
           ),
           InputBoxes(boxNameText: "Equipment", boxHintText: "Enter Equipments",
             boxPrefixIcon: Icon(Icons.account_circle_outlined, color: Colors.grey,),
-            controller: EquipmentCont,
+            controller: provider.EquipmentCont,
             validator: (value) {
               if (value == null || value.length<=1) {
                 return 'Enter correct phone equipments';

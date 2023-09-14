@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:resq/provider_code.dart';
 import '../../comman_design_code.dart';
 
 class Step2Page extends StatefulWidget {
@@ -14,7 +16,7 @@ class Step2Page extends StatefulWidget {
 }
 
 class _Step2PageState extends State<Step2Page> {
-  final TextEditingController AgencynameCont = TextEditingController();
+  final TextEditingController AdminstratornameCont = TextEditingController();
 
   final TextEditingController EmailaddressCont = TextEditingController();
   final TextEditingController phonenumCont = TextEditingController();
@@ -34,6 +36,7 @@ class _Step2PageState extends State<Step2Page> {
   ];
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<MyProviderData>(context, listen: false);
     return Form(
       key: widget.formKey,
       child: Column(
@@ -41,7 +44,7 @@ class _Step2PageState extends State<Step2Page> {
           SizedBox(height: 30,),
           InputBoxes(boxNameText: "Adminstrator Name", boxHintText: "Enter Adminstrator Name",
             boxPrefixIcon: Icon(Icons.account_circle_outlined, color: Colors.grey,),
-            controller: AgencynameCont,
+            controller: provider.AdminstratornameCont,
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Username is required';
@@ -53,7 +56,7 @@ class _Step2PageState extends State<Step2Page> {
 
           InputBoxes(boxNameText: "Email Address", boxHintText: "Enter email address",
             boxPrefixIcon: Icon(Icons.account_circle_outlined, color: Colors.grey,),
-            controller: EmailaddressCont,
+            controller: provider.EmailaddressCont,
             validator: (value) {
               return RegExp(
                   r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
@@ -64,7 +67,7 @@ class _Step2PageState extends State<Step2Page> {
           ),
           InputBoxes(boxNameText: "Phone number", boxHintText: "Enter Phone number",
             boxPrefixIcon: Icon(Icons.account_circle_outlined, color: Colors.grey,),
-            controller: phonenumCont,
+            controller: provider.phonenumCont,
             validator: (value) {
               if (value == null || value.length!=10) {
                 return 'Enter correct phone number';
@@ -74,7 +77,7 @@ class _Step2PageState extends State<Step2Page> {
           ),
           InputBoxes(boxNameText: "Pin Code", boxHintText: "Enter Pin Code",
             boxPrefixIcon: Icon(Icons.account_circle_outlined, color: Colors.grey,),
-            controller: pincodeCont,
+            controller: provider.pincodeCont,
             validator: (value) {
               if (value == null || value.length!=6) {
                 return 'Enter correct phone number';
@@ -84,7 +87,7 @@ class _Step2PageState extends State<Step2Page> {
           ),
           InputBoxes(boxNameText: "state", boxHintText: "Enter State",
             boxPrefixIcon: Icon(Icons.account_circle_outlined, color: Colors.grey,),
-            controller: StateCont,
+            controller: provider.StateCont,
             validator: (value) {
               if (value == null || value.length<=3) {
                 return 'Enter correct State';
@@ -94,7 +97,7 @@ class _Step2PageState extends State<Step2Page> {
           ),
           InputBoxes(boxNameText: "district", boxHintText: "Enter district",
             boxPrefixIcon: Icon(Icons.account_circle_outlined, color: Colors.grey,),
-            controller: distictCont,
+            controller: provider.distictCont,
             validator: (value) {
               if (value == null || value.length<=3) {
                 return 'Enter correct district';
@@ -104,7 +107,7 @@ class _Step2PageState extends State<Step2Page> {
           ),
           InputBoxes(boxNameText: "name", boxHintText: "Enter city name",
             boxPrefixIcon: Icon(Icons.account_circle_outlined, color: Colors.grey,),
-            controller: StateCont,
+            controller: provider.StateCont,
             validator: (value) {
               if (value == null || value.length<=3) {
                 return 'Enter correct State';
