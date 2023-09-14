@@ -1,4 +1,4 @@
-import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +17,7 @@ class MyProviderData extends ChangeNotifier {
   final TextEditingController phonenumCont = TextEditingController();
   final TextEditingController pincodeCont = TextEditingController();
   final TextEditingController StateCont = TextEditingController();
-  final TextEditingController distictCont = TextEditingController();
+  final TextEditingController districtCont = TextEditingController();
   final TextEditingController NameCont = TextEditingController();
   //step3
   final TextEditingController AreaCont = TextEditingController();

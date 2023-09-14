@@ -1,8 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:resq/provider_code.dart';
 import '../../comman_design_code.dart';
-
+import 'package:http/http.dart' as http;
 class Step2Page extends StatefulWidget {
   final GlobalKey<FormState> formKey;
 
@@ -85,6 +87,26 @@ class _Step2PageState extends State<Step2Page> {
               return null;
             },
           ),
+          TextButton(onPressed: ()async{
+            String pincode=provider.pincodeCont.text;
+            print(pincode);
+            final response = await http.get(Uri.parse('https://api.postalpincode.in/pincode/$pincode'));
+            if (response.statusCode == 200) {
+              // Parse the JSON data if the request was successful.
+              final jsonData = json.decode(response.body);
+              // Now you can work with the data.
+              print(jsonData);
+            } else {
+              // Handle errors, e.g., show an error message to the user.
+              print('Request failed with status: ${response.statusCode}');
+            }
+            final data = json.decode(response.body);
+            provider.StateCont.text=data[0]['PostOffice'][0]['State'];
+            provider.districtCont.text=data[0]['PostOffice'][0]['District'];
+            provider.NameCont.text=data[0]['PostOffice'][0]['Name'];
+         //   final name = jData['name'];
+           // final email = jsonData['email'];
+          }, child: Text("Auto fill")),
           InputBoxes(boxNameText: "state", boxHintText: "Enter State",
             boxPrefixIcon: Icon(Icons.account_circle_outlined, color: Colors.grey,),
             controller: provider.StateCont,
@@ -97,7 +119,7 @@ class _Step2PageState extends State<Step2Page> {
           ),
           InputBoxes(boxNameText: "district", boxHintText: "Enter district",
             boxPrefixIcon: Icon(Icons.account_circle_outlined, color: Colors.grey,),
-            controller: provider.distictCont,
+            controller: provider.districtCont,
             validator: (value) {
               if (value == null || value.length<=3) {
                 return 'Enter correct district';
@@ -107,7 +129,7 @@ class _Step2PageState extends State<Step2Page> {
           ),
           InputBoxes(boxNameText: "name", boxHintText: "Enter city name",
             boxPrefixIcon: Icon(Icons.account_circle_outlined, color: Colors.grey,),
-            controller: provider.StateCont,
+            controller: provider.NameCont,
             validator: (value) {
               if (value == null || value.length<=3) {
                 return 'Enter correct State';
