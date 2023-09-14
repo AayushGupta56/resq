@@ -12,7 +12,6 @@ class MyProviderData extends ChangeNotifier {
   String ?selectedAgencyType ;
   //step2
   final TextEditingController AdminstratornameCont = TextEditingController();
-
   final TextEditingController EmailaddressCont = TextEditingController();
   final TextEditingController phonenumCont = TextEditingController();
   final TextEditingController pincodeCont = TextEditingController();
@@ -21,7 +20,6 @@ class MyProviderData extends ChangeNotifier {
   final TextEditingController NameCont = TextEditingController();
   //step3
   final TextEditingController AreaCont = TextEditingController();
-
   final TextEditingController ResourcesCont = TextEditingController();
   final TextEditingController EquipmentCont = TextEditingController();
 
