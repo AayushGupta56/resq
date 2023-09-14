@@ -6,5 +6,8 @@ import 'package:flutter/foundation.dart';
 
 class MyProviderData extends ChangeNotifier {
   // Your provider implementation goes here...
+  final TextEditingController AgencynameCont = TextEditingController();
+  final TextEditingController registrationCont = TextEditingController();
+  String ?selectedAgencyType ;
 
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../comman_design_code.dart';
+import '../../provider_code.dart';
 
 
 class Step1Page extends StatefulWidget {
@@ -17,11 +19,10 @@ class Step1Page extends StatefulWidget {
 
 class _Step1PageState extends State<Step1Page> {
   // Text editing controllers for form fields
-  final TextEditingController AgencynameCont = TextEditingController();
-  final TextEditingController registrationCont = TextEditingController();
 
 
-  String ?selectedAgencyType ; // Initially, no country is selected
+
+  // Initially, no country is selected
 
   List<String> agencies = [
     'Government',
@@ -32,6 +33,7 @@ class _Step1PageState extends State<Step1Page> {
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<MyProviderData>(context, listen: false);
     return Form(
       key: widget.formKey,
       child: Column(
@@ -39,7 +41,7 @@ class _Step1PageState extends State<Step1Page> {
           SizedBox(height: 30,),
           InputBoxes(boxNameText: "Agency Name", boxHintText: "Enter Agency Name",
             boxPrefixIcon: Icon(Icons.account_circle_outlined, color: Colors.grey,),
-            controller: AgencynameCont,
+            controller: provider.AgencynameCont,
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Username is required';
@@ -51,10 +53,10 @@ class _Step1PageState extends State<Step1Page> {
           MyDropdownField<String>(
             fieldName: 'Agency Type',
             hintText: 'Select agency type',
-            value: selectedAgencyType,
+            value: provider.selectedAgencyType,
             onChanged: (newValue) {
               setState(() {
-                selectedAgencyType = newValue!;
+                provider.selectedAgencyType = newValue!;
               });
             },
             items: agencies.map((country) {
@@ -74,7 +76,7 @@ class _Step1PageState extends State<Step1Page> {
 
           InputBoxes(boxNameText: "Registration", boxHintText: "Enter Agency Name",
             boxPrefixIcon: Icon(Icons.account_circle_outlined, color: Colors.grey,),
-            controller: registrationCont,
+            controller: provider.registrationCont,
             validator: (value) {
             //   if (value == null || value.isEmpty) {
             //     return 'User is required';

@@ -50,29 +50,6 @@ class _Step2PageState extends State<Step2Page> {
             },
           ),
           SizedBox(height: 10.0),
-          // MyDropdownField<String>(
-          //   fieldName: 'Agency Type',
-          //   hintText: 'Select agency type',
-          //   value: selectedAgencyType,
-          //   onChanged: (newValue) {
-          //     setState(() {
-          //       selectedAgencyType = newValue!;
-          //     });
-          //   },
-          //   items: agencies.map((country) {
-          //     return DropdownMenuItem(
-          //       value: country,
-          //       child: Text(country),
-          //     );
-          //   }).toList(),
-          //   validator: (value) {
-          //     if (value == null) {
-          //       return 'Please select agency type';
-          //     }
-          //     return null;
-          //   },
-          // ),
-         // SizedBox(height: 10.0),
 
           InputBoxes(boxNameText: "Email Address", boxHintText: "Enter email address",
             boxPrefixIcon: Icon(Icons.account_circle_outlined, color: Colors.grey,),

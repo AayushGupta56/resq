@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:im_stepper/stepper.dart';
+import 'package:provider/provider.dart';
 import 'package:resq/auth/register/step1.dart';
 import 'package:resq/auth/register/step2.dart';
 import 'package:resq/auth/register/step3.dart';
+
+import '../provider_code.dart';
 
 void main() {
   runApp(RegisterPage());
@@ -99,21 +102,25 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   Widget nextButton() {
+    final provider = Provider.of<MyProviderData>(context, listen: false);
     return ElevatedButton(
       onPressed: () {
         // Validate the form before proceeding to the next step
         if (formKey.currentState!.validate()) {
-          if (activeStep < upperBound) {
-            setState(() {
-              activeStep++;
-            });
-          } else {
+            if (activeStep < upperBound) {
+              setState(() {
+                activeStep++;
+              });
+            }
+          else {
             // Check if the step is 3 or the index is 2
             if (activeStep == 2) {
+              // save third step data to the provider
               // Execute the function when step is 3 or index is 2
               postDataToServer();
             }
           }
+
         }
       },
       child: Text('Next'),
