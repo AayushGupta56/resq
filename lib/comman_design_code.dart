@@ -1,6 +1,46 @@
 import 'package:flutter/material.dart';
 
 
+
+   // code to show loading
+// showDialog(
+// context: context,
+// barrierDismissible: false,
+// builder: (context) {
+// return loadingDesign;
+// },
+// );
+
+  // dismiss loading
+ // Navigator.of(context).pop();
+
+Widget loadingDesign = Center(
+  child: Container(
+    width: 80.0,
+    height: 80.0,
+    decoration: BoxDecoration(
+      shape: BoxShape.circle,
+      color: Colors.white,
+      border: Border.all(
+        color: Color(0xFFB90000),
+        width: 2.0,
+      ),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.grey,
+          offset: Offset(0, 2),
+          blurRadius: 4.0,
+        ),
+      ],
+    ),
+    padding: EdgeInsets.all(20.0),
+    child: Center(child: CircularProgressIndicator(
+      color: Colors.black,
+    )),
+  ),
+);
+
+
 class InputBoxes extends StatefulWidget {
   final String boxNameText;
   final String boxHintText;
