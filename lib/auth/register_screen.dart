@@ -28,40 +28,42 @@ class _RegisterPageState extends State<RegisterPage> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        appBar: AppBar(
-          title: Text('IconStepper Example'),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              IconStepper(
-                icons: [
-                  Icon(Icons.supervised_user_circle),
-                  Icon(Icons.flag),
-                  Icon(Icons.location_on),
-                ],
-                activeStep: activeStep,
-                onStepReached: (index) {
-                  setState(() {
-                    activeStep = index;
-                  });
-                },
-              ),
-              header(),
-              Expanded(
-                child: getContent(activeStep),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  if (activeStep > 0)
-                    previousButton(),
-                  if (activeStep < upperBound)
-                    nextButton(),
-                ],
-              ),
-            ],
+        // appBar: AppBar(
+        //   title: Text('IconStepper Example'),
+        // ),
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                IconStepper(
+                  icons: [
+                    Icon(Icons.supervised_user_circle),
+                    Icon(Icons.flag),
+                    Icon(Icons.location_on),
+                  ],
+                  activeStep: activeStep,
+                  onStepReached: (index) {
+                    setState(() {
+                      activeStep = index;
+                    });
+                  },
+                ),
+                header(),
+                Expanded(
+                  child: getContent(activeStep),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    if (activeStep > 0)
+                      previousButton(),
+                    if (activeStep < upperBound)
+                      nextButton(),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -76,8 +78,19 @@ class _RegisterPageState extends State<RegisterPage> {
           child: Step1Page(
             formKey: formKey,
           ),
-        ); // Display step1.dart content
-
+        );
+      case 1:
+        return SingleChildScrollView(
+          child: Step2Page(
+            formKey: formKey,
+          ),
+        );// Display step1.dart content
+      case 2:
+        return SingleChildScrollView(
+          child: Step3Page(
+            formKey: formKey,
+          ),
+        );
     // Add similar cases for other steps (Step2Page, Step3Page) if needed.
 
       default:
