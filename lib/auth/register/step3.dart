@@ -19,7 +19,7 @@ class _Step3PageState extends State<Step3Page> {
   final TextEditingController AreaCont = TextEditingController();
 
   final TextEditingController ResourcesCont = TextEditingController();
-  final TextEditingController EquipmentCont = TextEditingController();
+  final TextEditingController numberOfWorkers = TextEditingController();
 
   String? selectedAgencyType; // Initially, no country is selected
 
@@ -103,9 +103,9 @@ class _Step3PageState extends State<Step3Page> {
               Icons.account_circle_outlined,
               color: Colors.grey,
             ),
-            controller: provider.EquipmentCont,
+            controller: provider.numberOfWorkers,
             validator: (value) {
-              if (value == null || value.length <= 1) {
+              if (value == null || value.length <= 0) {
                 return 'Enter correct phone equipments';
               }
               return null;

@@ -67,6 +67,16 @@ class _Step2PageState extends State<Step2Page> {
                   : "Please enter a valid email";
             },
           ),
+          InputBoxes(boxNameText: "Create password", boxHintText: "Create Password",
+            boxPrefixIcon: Icon(Icons.account_circle_outlined, color: Colors.grey,),
+            controller: provider.PasswordCont,
+            validator: (value) {
+              if (value == null || value.length<=5) {
+                return 'password should be at least 6 characters';
+              }
+              return null;
+            },
+          ),
           InputBoxes(boxNameText: "Phone number", boxHintText: "Enter Phone number",
             boxPrefixIcon: Icon(Icons.account_circle_outlined, color: Colors.grey,),
             controller: provider.phonenumCont,

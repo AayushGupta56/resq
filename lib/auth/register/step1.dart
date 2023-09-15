@@ -76,7 +76,7 @@ class _Step1PageState extends State<Step1Page> {
 
           InputBoxes(boxNameText: "Registration", boxHintText: "Enter Agency Name",
             boxPrefixIcon: Icon(Icons.account_circle_outlined, color: Colors.grey,),
-            controller: provider.registrationCont,
+            controller: provider.registrationNumberCont,
             validator: (value) {
             //   if (value == null || value.isEmpty) {
             //     return 'User is required';
