@@ -1,4 +1,3 @@
-
 import 'package:provider/provider.dart';
 import 'package:resq/provider_code.dart';
 import 'package:resq/shared_prefrences/helper_function.dart';

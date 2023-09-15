@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:im_stepper/stepper.dart';
 import 'package:provider/provider.dart';
-import 'package:resq/auth/home_page.dart';
+import 'package:resq/home/home_page.dart';
 import 'package:resq/auth/register/step1.dart';
 import 'package:resq/auth/register/step2.dart';
 import 'package:resq/auth/register/step3.dart';

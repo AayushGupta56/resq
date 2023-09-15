@@ -2,7 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:resq/auth/home_page.dart';
+import 'package:resq/home/home_page.dart';
 import 'package:resq/provider_code.dart';
 import 'package:resq/shared_prefrences/helper_function.dart';
 import 'auth/login_screen.dart';

@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:resq/auth/home_page.dart';
+import 'package:resq/home/home_page.dart';
 import 'package:resq/auth/register_screen.dart';
 import 'package:resq/services/auth_services.dart';
 import 'package:resq/services/database_services.dart';
@@ -33,7 +33,7 @@ class _LoginPageState extends State<LoginPage> {
          // saving the values to our shared preferences
          await HelperFunctions.saveUserLoggedInStatus(true);
           await HelperFunctions.saveUserEmailSF(emailCont.text);
-         await HelperFunctions.saveUserNameSF(snapshot.docs[0]['fullName']);
+     //    await HelperFunctions.saveUserNameSF(snapshot.docs[0]['fullName']);
          nextScreenReplace(context,  HomePage());
           nextScreen(context, HomePage());
         }

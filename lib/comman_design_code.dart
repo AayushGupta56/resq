@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'home/agency_detail.dart';
+
 
 
    // code to show loading
@@ -13,6 +15,73 @@ import 'package:flutter/material.dart';
 
   // dismiss loading
  // Navigator.of(context).pop();
+
+
+class AnimatedCounter extends StatefulWidget {
+  final int targetNumber;
+  final Duration duration;
+
+  AnimatedCounter({required this.targetNumber, required this.duration});
+
+  @override
+  _AnimatedCounterState createState() => _AnimatedCounterState();
+}
+
+class _AnimatedCounterState extends State<AnimatedCounter>
+    with TickerProviderStateMixin { // Use TickerProviderStateMixin
+  late int _currentNumber;
+  late Animation<int> _animation;
+  late AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _currentNumber = 0;
+
+    _controller = AnimationController(
+      duration: widget.duration,
+      vsync: this, // Now _AnimatedCounterState can be used as TickerProvider
+    );
+
+    _animation = IntTween(begin: 0, end: widget.targetNumber).animate(_controller);
+
+    _animation.addListener(() {
+      setState(() {
+        _currentNumber = _animation.value;
+      });
+    });
+
+    _controller.forward();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        children: [
+          Text(
+            'Registered Agencies: ',
+            style: TextStyle(fontSize: 26, color: Colors.white, fontWeight: FontWeight.bold),
+          ),
+      Text(
+      '$_currentNumber', // Use _currentNumber here
+      style: TextStyle(fontSize: 36, fontWeight: FontWeight.bold, color: Colors.green),
+      )
+        ],
+      ),
+    );
+
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+}
+
+
 
 Widget loadingDesign = Center(
   child: Container(
@@ -225,11 +294,10 @@ class MyButton extends StatelessWidget {
 }
 
 class MyCard extends StatelessWidget {
-  MyCard({required this.cardText, required this.circleIcon, required this.circleColor, required this.titleText});
-  final Icon circleIcon;
-  final String cardText;
-  final Color circleColor;
-  final String titleText;
+  MyCard({required this.agencyName, required this.aoe, required this.location});
+  final String aoe;
+  final String agencyName;
+  final String location;
 //
   //
   @override
@@ -237,43 +305,51 @@ class MyCard extends StatelessWidget {
     return Container(
       width: 150,
       height: 160,
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0), // Set the border radius
-        ),
-        elevation: 0.5, // Add elevation to the card
-        child: Column(
-          children: [
-            SizedBox(height: 10,),
-            Padding(
-              padding: const EdgeInsets.only(left: 10),
-              child: Align(
-                alignment: Alignment.topLeft,
-                child: Container(
-                  width: 60,
-                  height: 60,
-                  decoration: BoxDecoration(
-                    color: circleColor, // Circular container background color
-                    shape: BoxShape.circle,
-                  ),
-                  child: circleIcon, // Replace with your image asset path
+      child: GestureDetector(
+          onTap: () {
+            // Navigate to DetailScreenPage and pass agency details
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => DetailScreenPage(
+                  agencyDetails: {
+                    'AgencyName': agencyName,
+                    'areaExpertise': aoe,
+                    'district': location,
+                    // Add more fields here as needed
+                  },
                 ),
               ),
-            ),
-            SizedBox(height: 10,),
-            Align(
-              alignment: Alignment.topLeft,
-              child: Padding(
-                padding: const EdgeInsets.only(top: 0, right: 10, left: 10, bottom: 0),
-                child: Text(titleText, style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),),
+            );
+          },
+        child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0), // Set the border radius
+          ),
+          elevation: 1, // Add elevation to the card
+          child: Column(
+            children: [
+              SizedBox(height: 10,),
+
+              Align(
+                alignment: Alignment.topLeft,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 0, right: 10, left: 10, bottom: 0),
+                  child: Text("Agency: " + agencyName, style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),),
+                ),
               ),
-            ),
-            SizedBox(height: 5,),
-            Padding(
-              padding: const EdgeInsets.only(top: 0, right: 10, left: 10, bottom: 0),
-              child: Text(cardText, style: TextStyle(color: Colors.grey),),
-            ),
-          ],
+              SizedBox(height: 5,),
+              Padding(
+                padding: const EdgeInsets.only(top: 0, right: 10, left: 10, bottom: 0),
+                child: Text("AOE: "+ aoe, style: TextStyle(color: Colors.black),),
+              ),
+              SizedBox(height: 5,),
+              Padding(
+                padding: const EdgeInsets.only(top: 0, right: 10, left: 10, bottom: 0),
+                child: Text("Location: "+ location, style: TextStyle(color: Colors.black),),
+              ),
+            ],
+          ),
         ),
       ),
     );
