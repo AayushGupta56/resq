@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:resq/provider_code.dart';
-
 import 'auth/login_screen.dart';
 
 Future<void> main() async {
