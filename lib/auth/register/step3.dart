@@ -3,9 +3,9 @@ import 'package:provider/provider.dart';
 import 'package:resq/provider_code.dart';
 import '../../comman_design_code.dart';
 
+
 class Step3Page extends StatefulWidget {
   final GlobalKey<FormState> formKey;
-
 
   Step3Page({
     required this.formKey,
@@ -19,10 +19,9 @@ class _Step3PageState extends State<Step3Page> {
   final TextEditingController AreaCont = TextEditingController();
 
   final TextEditingController ResourcesCont = TextEditingController();
-  final TextEditingController EquipmentCont = TextEditingController();
+  final TextEditingController numberOfWorkers = TextEditingController();
 
-
-  String ?selectedAgencyType ; // Initially, no country is selected
+  String? selectedAgencyType; // Initially, no country is selected
 
   List<String> agencies = [
     'Government',
@@ -30,6 +29,7 @@ class _Step3PageState extends State<Step3Page> {
     'Private',
     // Add more countries as needed
   ];
+
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<MyProviderData>(context, listen: false);
@@ -37,9 +37,16 @@ class _Step3PageState extends State<Step3Page> {
       key: widget.formKey,
       child: Column(
         children: [
-          SizedBox(height: 30,),
-          InputBoxes(boxNameText: "Area of expertise", boxHintText: "Enter Area of Expertise",
-            boxPrefixIcon: Icon(Icons.account_circle_outlined, color: Colors.grey,),
+          SizedBox(
+            height: 30,
+          ),
+          InputBoxes(
+            boxNameText: "Area of expertise",
+            boxHintText: "Enter Area of Expertise",
+            boxPrefixIcon: Icon(
+              Icons.account_circle_outlined,
+              color: Colors.grey,
+            ),
             controller: provider.AreaCont,
             validator: (value) {
               if (value == null || value.isEmpty) {
@@ -73,30 +80,38 @@ class _Step3PageState extends State<Step3Page> {
           // ),
           // SizedBox(height: 10.0),
 
-
-          InputBoxes(boxNameText: "Resources", boxHintText: "Enter Resources",
-            boxPrefixIcon: Icon(Icons.account_circle_outlined, color: Colors.grey,),
+          InputBoxes(
+            boxNameText: "Resources",
+            boxHintText: "Enter Resources",
+            boxPrefixIcon: Icon(
+              Icons.account_circle_outlined,
+              color: Colors.grey,
+            ),
             controller: provider.ResourcesCont,
             validator: (value) {
-              if (value == null || value.length<=2) {
+              if (value == null || value.length <= 2) {
                 return 'Enter correct resources';
               }
               return null;
             },
           ),
-          InputBoxes(boxNameText: "Equipment", boxHintText: "Enter Equipments",
-            boxPrefixIcon: Icon(Icons.account_circle_outlined, color: Colors.grey,),
-            controller: provider.EquipmentCont,
+
+          InputBoxes(
+            boxNameText: "Equipment",
+            boxHintText: "Enter Equipments",
+            boxPrefixIcon: Icon(
+              Icons.account_circle_outlined,
+              color: Colors.grey,
+            ),
+            controller: provider.numberOfWorkers,
             validator: (value) {
-              if (value == null || value.length<=1) {
+              if (value == null || value.length <= 0) {
                 return 'Enter correct phone equipments';
               }
               return null;
             },
           ),
-
         ],
-
       ),
     );
   }

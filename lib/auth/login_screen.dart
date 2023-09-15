@@ -1,15 +1,50 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:resq/auth/home_page.dart';
 import 'package:resq/auth/register_screen.dart';
+import 'package:resq/services/auth_services.dart';
+import 'package:resq/services/database_services.dart';
+import 'package:resq/shared_prefrences/helper_function.dart';
+import 'package:resq/widgets/widgets.dart';
 
 import '../comman_design_code.dart';
 
 
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
 
-  TextEditingController userNameCont = TextEditingController();
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  TextEditingController emailCont = TextEditingController();
   TextEditingController passwordCont = TextEditingController();
+  AuthService authService=AuthService();
+  login() async {
+   // if (formKey.currentState!.validate()) {
 
+      await authService.loginWithUserNameandPassword( emailCont.text, passwordCont.text).then((value) async {
+        if(value==true){
+          QuerySnapshot snapshot = await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
+              .gettingUserData(emailCont.text);
+         // saving the values to our shared preferences
+         await HelperFunctions.saveUserLoggedInStatus(true);
+          await HelperFunctions.saveUserEmailSF(emailCont.text);
+         await HelperFunctions.saveUserNameSF(snapshot.docs[0]['fullName']);
+         nextScreenReplace(context,  HomePage());
+          nextScreen(context, HomePage());
+        }
+        else{
+          showSnackbar(context, Colors.red, value);
+
+        }
+      }
+      );
+   // }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,14 +77,15 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 5,),
-              InputBoxes(boxNameText: "username", boxHintText: "Enter Username",
+              InputBoxes(boxNameText: "Email", boxHintText: "Enter Email",
                 boxPrefixIcon: Icon(Icons.account_circle_outlined, color: Colors.grey,),
-                controller: userNameCont,
+                controller: emailCont,
                 validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Username is required';
-                  }
-                  return null;
+                  return RegExp(
+                      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                      .hasMatch(value!)
+                      ? null
+                      : "Please enter a valid email";
                 },
               ),
 
@@ -59,13 +95,14 @@ class LoginPage extends StatelessWidget {
                 boxPrefixIcon: Icon(Icons.lock_outlined, color: Colors.grey,),
                 controller: passwordCont,
                 validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Username is required';
+                  if (value == null || value.length<=6) {
+                    return 'Password should be greater than 6 characters';
                   }
                   return null;
                 },
               ),
               MyButton(buttonName: "Login", onPressed: (){
+                login();
                // Navigator.push(context, MaterialPageRoute(builder: (context)=> RegisterPage()));
               }),
               SizedBox(height: 10.0),

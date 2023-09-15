@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:im_stepper/stepper.dart';
 import 'package:provider/provider.dart';
+import 'package:resq/auth/home_page.dart';
 import 'package:resq/auth/register/step1.dart';
 import 'package:resq/auth/register/step2.dart';
 import 'package:resq/auth/register/step3.dart';
-
-import '../provider_code.dart';
+import 'package:resq/services/auth_services.dart';
+import 'package:resq/shared_prefrences/helper_function.dart';
+import 'package:resq/widgets/widgets.dart';
+import 'package:provider/provider.dart';
+import 'package:resq/provider_code.dart';
 
 void main() {
   runApp(RegisterPage());
@@ -21,10 +25,41 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPageState extends State<RegisterPage> {
   int activeStep = 0; // Initial step set to 0.
   int upperBound = 2; // upperBound should be 2 for 3 steps (0, 1, 2).
-
-
-
+  bool isLoading = false;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  AuthService authService = AuthService();
+
+  register() async {
+    final provider = Provider.of<MyProviderData>(context, listen: false);
+
+    if (formKey.currentState!.validate()) {
+      setState(() {
+        isLoading = true;
+      });
+      await authService
+          .registerUserWithEmailandPassword(
+        provider.AgencynameCont.text,
+        provider.EmailaddressCont.text,
+        provider.PasswordCont.text,
+        context,
+      )
+          .then((value) async {
+        if (value == true) {
+          //save shared preferences
+          await HelperFunctions.saveUserLoggedInStatus(true);
+          await HelperFunctions.saveUserEmailSF(provider.EmailaddressCont.text);
+          await HelperFunctions.saveUserNameSF(provider.NameCont.text);
+         print('build');
+          nextScreenReplace(context,  HomePage());
+        } else {
+          showSnackbar(context, Colors.red, value);
+          setState(() {
+            isLoading = false;
+          });
+        }
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,10 +94,17 @@ class _RegisterPageState extends State<RegisterPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    if (activeStep > 0)
-                      previousButton(),
-                    if (activeStep < upperBound)
-                      nextButton(),
+                    if (activeStep > 0) previousButton(),
+                    if (activeStep < upperBound) nextButton(),
+                    if (activeStep == 2)
+                      TextButton(
+                        onPressed: () {
+                          if (formKey.currentState!.validate()) {
+                            register();
+                          }
+                        },
+                        child: Text('register'),
+                      ),
                   ],
                 ),
               ],
@@ -87,14 +129,14 @@ class _RegisterPageState extends State<RegisterPage> {
           child: Step2Page(
             formKey: formKey,
           ),
-        );// Display step1.dart content
+        ); // Display step1.dart content
       case 2:
         return SingleChildScrollView(
           child: Step3Page(
             formKey: formKey,
           ),
         );
-    // Add similar cases for other steps (Step2Page, Step3Page) if needed.
+      // Add similar cases for other steps (Step2Page, Step3Page) if needed.
 
       default:
         return SizedBox.shrink(); // Return an empty widget by default
@@ -107,12 +149,11 @@ class _RegisterPageState extends State<RegisterPage> {
       onPressed: () {
         // Validate the form before proceeding to the next step
         if (formKey.currentState!.validate()) {
-            if (activeStep < upperBound) {
-              setState(() {
-                activeStep++;
-              });
-            }
-          else {
+          if (activeStep < upperBound) {
+            setState(() {
+              activeStep++;
+            });
+          } else {
             // Check if the step is 3 or the index is 2
             if (activeStep == 2) {
               // save third step data to the provider
@@ -120,7 +161,6 @@ class _RegisterPageState extends State<RegisterPage> {
               postDataToServer();
             }
           }
-
         }
       },
       child: Text('Next'),
@@ -134,7 +174,6 @@ class _RegisterPageState extends State<RegisterPage> {
     // Your code to send data to the server goes here.
     print('Data posted to server');
   }
-
 
   Widget previousButton() {
     return ElevatedButton(
