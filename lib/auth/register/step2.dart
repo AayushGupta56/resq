@@ -30,12 +30,6 @@ class _Step2PageState extends State<Step2Page> {
 
   String ?selectedAgencyType ; // Initially, no country is selected
 
-  List<String> agencies = [
-    'Government',
-    'Non-Profit',
-    'Private',
-    // Add more countries as needed
-  ];
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<MyProviderData>(context, listen: false);

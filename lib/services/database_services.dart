@@ -25,7 +25,9 @@ class DatabaseService {
     String? cityName,
     String? areaExpertise,
     String? resources,
-    String? numberOfWorkers,}
+    String? numberOfWorkers,
+    String? imageUrl,
+  }
   ) async {
     return await userCollection.doc(uid).set({
       "AgencyName": agencyName,
@@ -42,6 +44,7 @@ class DatabaseService {
       "resources":resources,
       "numberOfWorkers":numberOfWorkers,
        "uid": uid,
+      "imageUrl" : imageUrl,
     });
   }
 

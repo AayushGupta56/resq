@@ -294,67 +294,107 @@ class MyButton extends StatelessWidget {
 }
 
 class MyCard extends StatelessWidget {
-  MyCard({required this.agencyName, required this.aoe, required this.location});
+  MyCard({required this.agencyName, required this.aoe, required this.location, required this.imageurl,
+  required this.email, required this.adminstratorName, required this.agencyType,
+  required this.phoneNum, required this.pincode, required this.registrationNum, required this.state,
+     });
   final String aoe;
   final String agencyName;
   final String location;
-//
-  //
+  final String imageurl;
+  final String registrationNum;
+  final String agencyType;
+  final String adminstratorName;
+  final String email;
+  final String phoneNum;
+  final String pincode;
+  final String state;
+
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 150,
-      height: 160,
-      child: GestureDetector(
-          onTap: () {
-            // Navigate to DetailScreenPage and pass agency details
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => DetailScreenPage(
-                  agencyDetails: {
-                    'AgencyName': agencyName,
-                    'areaExpertise': aoe,
-                    'district': location,
-                    // Add more fields here as needed
-                  },
+    return GestureDetector(
+      onTap: () {
+        // Navigate to DetailScreenPage and pass agency details
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DetailScreenPage(
+              agencyDetails: {
+                'AgencyName': agencyName,
+                'areaExpertise': aoe,
+                'district': location,
+                'imageUrl': imageurl,
+                "RegistrationNum":registrationNum,
+                "agencyType":agencyType,
+                "adminstratorName":adminstratorName,
+                "email":email,
+                "phoneNum":phoneNum,
+                "pincode":pincode,
+                "state":state,
+                // Add more fields here as needed
+              },
+            ),
+          ),
+        );
+      },
+      child: Card(
+        //color: Colors.red[400],
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0), // Set the border radius
+        ),
+        elevation: 1, // Add elevation to the card
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Column(
+              children: [
+                SizedBox(height: 10,),
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Container(
+                    width: 60,
+                    height: 65,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: Colors.blue[900]!, // Set the outline color to blue
+                        width: 2.0, // Adjust the border width as needed
+                      ),
+                    ),
+                    child: ClipOval(
+                      child: Image.network(
+                        imageurl, // Replace with your image URL
+                        fit: BoxFit.cover, // You can adjust the fit property as needed
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 5,),
+              ],
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text( agencyName, style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),),
+                    SizedBox(height: 5,),
+                    Text("AOE: "+ aoe, style: TextStyle(color: Colors.black),),
+                    SizedBox(height: 5,),
+                    Text("Location: "+ location, style: TextStyle(color: Colors.black),),
+                  ],
                 ),
               ),
-            );
-          },
-        child: Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.0), // Set the border radius
-          ),
-          elevation: 1, // Add elevation to the card
-          child: Column(
-            children: [
-              SizedBox(height: 10,),
-
-              Align(
-                alignment: Alignment.topLeft,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 0, right: 10, left: 10, bottom: 0),
-                  child: Text("Agency: " + agencyName, style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 18),),
-                ),
-              ),
-              SizedBox(height: 5,),
-              Padding(
-                padding: const EdgeInsets.only(top: 0, right: 10, left: 10, bottom: 0),
-                child: Text("AOE: "+ aoe, style: TextStyle(color: Colors.black),),
-              ),
-              SizedBox(height: 5,),
-              Padding(
-                padding: const EdgeInsets.only(top: 0, right: 10, left: 10, bottom: 0),
-                child: Text("Location: "+ location, style: TextStyle(color: Colors.black),),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
   }
 }
+
 
 class BottomAppBarItem extends StatelessWidget {
   final IconData icon;

@@ -49,8 +49,7 @@ class AuthService {
           areaExpertise: provider.AreaCont.text,
           resources: provider.ResourcesCont.text,
           numberOfWorkers: provider.numberOfWorkers.text,
-
-
+          imageUrl: provider.imageUrl,
         );
         return true;
       }

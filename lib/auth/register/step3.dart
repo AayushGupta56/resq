@@ -1,7 +1,13 @@
+
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:resq/provider_code.dart';
 import '../../comman_design_code.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+
 
 
 class Step3Page extends StatefulWidget {
@@ -23,12 +29,7 @@ class _Step3PageState extends State<Step3Page> {
 
   String? selectedAgencyType; // Initially, no country is selected
 
-  List<String> agencies = [
-    'Government',
-    'Non-Profit',
-    'Private',
-    // Add more countries as needed
-  ];
+
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +41,58 @@ class _Step3PageState extends State<Step3Page> {
           SizedBox(
             height: 30,
           ),
+
+          IconButton(
+              onPressed: () async {
+                /*
+                * Step 1. Pick/Capture an image   (image_picker)
+                * Step 2. Upload the image to Firebase storage
+                * Step 3. Get the URL of the uploaded image
+                * Step 4. Store the image URL inside the corresponding
+                *         document of the database.
+                * Step 5. Display the image on the list
+                *
+                * */
+
+                ImagePicker imagePicker = ImagePicker();
+                XFile? file =
+                await imagePicker.pickImage(source: ImageSource.gallery);
+                File myFile;
+                myFile = File(file!.path);
+                print('${file?.path}');
+
+
+                if (file == null || myFile==null) return;
+                // //Import dart:core
+                 String uniqueFileName =
+                 DateTime.now().millisecondsSinceEpoch.toString();
+                //
+                // /*Step 2: Upload to Firebase storage*/
+                // //Install firebase_storage
+                // //Import the library
+                //
+                // //Get a reference to storage root
+                 Reference referenceRoot = FirebaseStorage.instance.ref();
+                 Reference referenceDirImages =
+                 referenceRoot.child('images');
+
+                // //Create a reference for the image to be stored
+                 Reference referenceImageToUpload =
+                 referenceDirImages.child(uniqueFileName);
+                //
+                // //Handle errors/success
+                 try {
+                  //Store the file
+                  await referenceImageToUpload.putFile(myFile);
+                  //Success: get the download URL
+                  provider.imageUrl = await referenceImageToUpload.getDownloadURL();
+                } catch (error) {
+                  //Some error occurred
+                }
+              },
+              icon: Icon(Icons.camera_alt)),
+
+
           InputBoxes(
             boxNameText: "Area of expertise",
             boxHintText: "Enter Area of Expertise",

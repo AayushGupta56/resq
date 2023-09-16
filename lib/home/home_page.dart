@@ -57,6 +57,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xff161c2c),
       bottomNavigationBar: CurvedNavigationBar(
 
         key: _bottomNavigationKey,
@@ -69,7 +70,7 @@ class _HomePageState extends State<HomePage> {
         ],
         color: Colors.blue[700]!,
         buttonBackgroundColor: Colors.white,
-        backgroundColor: Colors.white54,
+        backgroundColor: Colors.white,
         animationCurve: Curves.easeInOut,
         animationDuration: Duration(milliseconds: 300),
         onTap: (index) {
@@ -210,6 +211,15 @@ class _HomePageState extends State<HomePage> {
                           agencyName: userData['AgencyName'] ?? "",
                           aoe: userData['areaExpertise'] ?? "",
                           location: userData['district'] ?? "",
+                          imageurl: userData['imageUrl'] ?? "",
+                          email: userData['email'] ?? "",
+                          registrationNum: userData['RegistrationNum'] ?? "",
+                          state: userData['state'] ?? "",
+                          phoneNum: userData['phoneNum'] ?? "",
+                          pincode: userData['pincode'] ?? "",
+                          adminstratorName: userData['adminstratorName'] ?? "",
+                          agencyType: userData['agencyType'] ?? "",
+
                         );
                       },
                     ),

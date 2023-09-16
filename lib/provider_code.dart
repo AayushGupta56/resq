@@ -24,5 +24,6 @@ class MyProviderData extends ChangeNotifier {
   final TextEditingController AreaCont = TextEditingController();
   final TextEditingController ResourcesCont = TextEditingController();
   final TextEditingController numberOfWorkers = TextEditingController();
+  String imageUrl = '';
 
 }
