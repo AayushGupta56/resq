@@ -143,6 +143,7 @@ class _InputBoxesState extends State<InputBoxes> {
             child: Text(
               widget.boxNameText,
               style: TextStyle(
+
                 color: Colors.grey,
                 fontSize: 16,
               ),

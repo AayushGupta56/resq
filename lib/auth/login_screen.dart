@@ -28,14 +28,14 @@ class _LoginPageState extends State<LoginPage> {
 
       await authService.loginWithUserNameandPassword( emailCont.text, passwordCont.text).then((value) async {
         if(value==true){
-          QuerySnapshot snapshot = await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
-              .gettingUserData(emailCont.text);
+         // QuerySnapshot snapshot = await DatabaseService(uid: FirebaseAuth.instance.currentUser!.uid)
+           //   .gettingUserData(emailCont.text);
          // saving the values to our shared preferences
          await HelperFunctions.saveUserLoggedInStatus(true);
           await HelperFunctions.saveUserEmailSF(emailCont.text);
      //    await HelperFunctions.saveUserNameSF(snapshot.docs[0]['fullName']);
          nextScreenReplace(context,  HomePage());
-          nextScreen(context, HomePage());
+         // nextScreen(context, HomePage());
         }
         else{
           showSnackbar(context, Colors.red, value);
@@ -94,6 +94,7 @@ class _LoginPageState extends State<LoginPage> {
               InputBoxes(boxNameText: "password", boxHintText: "Enter password",
                 boxPrefixIcon: Icon(Icons.lock_outlined, color: Colors.grey,),
                 controller: passwordCont,
+
                 validator: (value) {
                   if (value == null || value.length<=6) {
                     return 'Password should be greater than 6 characters';
